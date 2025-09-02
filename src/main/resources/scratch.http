@@ -1,0 +1,78 @@
+Działania na użytkownikach:
+
+###  Rejestracja nowego użytkownika
+POST http://localhost:8080/api/v1/auth/register
+Content-Type: application/json
+
+{
+  "firstname": "jan",
+  "lastname": "kowalski",
+  "email": "jan.kowalski@domain.com",
+  "password": "password",
+  "role": "ADMIN",
+  "mfaEnabled": false
+}
+
+###  Rejestracja nowego użytkownika
+POST http://localhost:8080/api/v1/auth/register
+Content-Type: application/json
+
+{
+  "firstname": "Kazik",
+  "lastname": "Kowalczyk",
+  "email": "kazik.kowalczyk@domain.com",
+  "password": "password",
+  "role": "ADMIN",
+  "mfaEnabled": false
+}
+### Response:
+### [empty body]
+
+### Error respone:
+#{
+#  "timestamp": "2025-09-08T05:31:40.777+00:00",
+#  "status": 500,
+#  "error": "Internal Server Error",
+#  "path": "/api/v1/admin"
+#}
+
+### Sprawdzenie, czy działa autentykacja użytkownika
+POST http://localhost:8080/api/v1/auth/authenticate
+Content-Type: application/json
+
+{
+  "email": "jan.kowalski@domain.com",
+  "password": "password"
+}
+### Response:
+### {
+### "accessToken": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYW4ua293YWxza2lAZG9tYWluLmNvbSIsImlhdCI6MTc1NzMwODk0NiwiZXhwIjoxNzU3Mzk1MzQ2fQ.ZW6LpGyaWL4xlIOr64hQbQMA5Mf4XVle1IcsBiIJ_cM",
+### "refreshToken": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYW4ua293YWxza2lAZG9tYWluLmNvbSIsImlhdCI6MTc1NzMwODk0NiwiZXhwIjoxNzU3OTEzNzQ2fQ.EvTSjIGKd2mJmxtvXwVSzXOVTCdr-c3-FugOOVRkk7c",
+### "mfaEnabled": false
+### }
+
+### Odświeżenie tokena użytkownika
+POST http://localhost:8080/api/v1/auth/refresh-token
+Content-Type: application/x-www-form-urlencoded
+
+### Response:
+### [empty body]
+
+### Weryfikacja użytkownika tokenem
+POST http://localhost:8080/api/v1/auth/verify
+Content-Type: application/json
+
+{
+  "email": "jan.kowalski@domain.com",
+  "code": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYW4ua293YWxza2lAZG9tYWluLmNvbSIsImlhdCI6MTc1Njk2MzMyMywiZXhwIjoxNzU3NTY4MTIzfQ.MQCDfuq58QvLKdSmdjACixvg5QHjuGvbBAV1o12d6KY"
+}
+### Response:
+### {
+###   "accessToken": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYW4ua293YWxza2lAZG9tYWluLmNvbSIsImlhdCI6MTc1NzMwOTQ1MCwiZXhwIjoxNzU3Mzk1ODUwfQ.u4Vz5ejP2bRJtXXTVAcyRdsYxQ28xCrhOEjGj7Z9tNs",
+###   "mfaEnabled": true
+### }
+
+### Działania administratora
+
+###
+GET http://localhost:8080/api/v1/admin
