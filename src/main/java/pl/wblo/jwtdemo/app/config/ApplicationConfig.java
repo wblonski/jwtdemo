@@ -40,9 +40,11 @@ public class ApplicationConfig {
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(userDetailsService());
+        UserDetailsService userDetails = userDetailsService();
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(userDetails);
 //    authProvider.setUserDetailsService(userDetailsService());
         authProvider.setPasswordEncoder(passwordEncoder());
+        authProvider.setHideUserNotFoundExceptions(false);
         return authProvider;
     }
 
@@ -55,7 +57,7 @@ public class ApplicationConfig {
     public CorsFilter corsFilter() {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         final CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
+        config.setAllowCredentials(false);
         config.setAllowedOrigins(Collections.singletonList("http://localhost:8080"));
         config.setAllowedHeaders(Arrays.asList(
                 ORIGIN,

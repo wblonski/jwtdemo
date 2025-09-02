@@ -24,13 +24,12 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody RegisterRequest request
-    ) {
+            @RequestBody RegisterRequest request) {
         MyLogger.trace("register works!");
         var response = service.register(request);
-        if (request.isMfaEnabled()) {
-            return ResponseEntity.ok(response);
-        }
+//        if (request.isMfaEnabled()) {
+//            return ResponseEntity.ok(response);
+//        }
         return ResponseEntity.accepted().build();
     }
 
@@ -51,7 +50,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/verify")
-    public ResponseEntity<?> verifyCode(
+    public ResponseEntity<AuthenticationResponse> verifyCode(
             @RequestBody VerificationRequest verificationRequest
     ) {
         return ResponseEntity.ok(service.verifyCode(verificationRequest));

@@ -6,14 +6,13 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: false
     properties:
       hibernate:
         format_sql: true
     database: postgresql
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-
+    database-platform: org.hibernate.dialect.PostgreSQL94Dialect
 application:
   security:
     jwt:
@@ -21,3 +20,8 @@ application:
       expiration: 86400000 # a day
       refresh-token:
         expiration: 604800000 # 7 days
+logging:
+  level:
+    ROOT: WARN
+    pl.wblo.jwtdemo.app: WARN
+    org.springframework.web.reactive.function.client.ExchangeFunctions: trace

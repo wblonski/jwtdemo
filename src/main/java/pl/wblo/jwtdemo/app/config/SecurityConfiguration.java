@@ -3,34 +3,33 @@ package pl.wblo.jwtdemo.app.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfiguration {
 
-//    private final JwtAuthenticationFilter jwtAuthFilter;
+    private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
 
-    public SecurityConfiguration(AuthenticationProvider authenticationProvider) {
-//        this.jwtAuthFilter = jwtAuthFilter;
+    public SecurityConfiguration(JwtAuthenticationFilter jwtAuthFilter, AuthenticationProvider authenticationProvider) {
+        this.jwtAuthFilter = jwtAuthFilter;
         this.authenticationProvider = authenticationProvider;
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-//                .cors(Customizer.withDefaults())
-//                .and()
-//                .csrf()
-//                .disable()
-                .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
-//                .requestMatchers(
-//                        "/api/v1/auth/**",
+        return http
+                .cors(Customizer.withDefaults())
+                .csrf(csrf -> csrf.disable())
+                .securityMatcher(
+                        "/api/v1/auth/**"
 //                        "/v2/api-docs",
 //                        "/v3/api-docs",
 //                        "/v3/api-docs/**",
@@ -41,8 +40,8 @@ public class SecurityConfiguration {
 //                        "/swagger-ui/**",
 //                        "/webjars/**",
 //                        "/swagger-ui.html"
-//                )
-//                .permitAll()
+                )
+                .authorizeHttpRequests(auth -> auth.requestMatchers("/api/v1/auth/**").permitAll())
 
 //                .requestMatchers("/api/v1/management/**").hasAnyRole(ADMIN.name(), MANAGER.name())
 //
@@ -57,9 +56,8 @@ public class SecurityConfiguration {
 //                .sessionManagement()
 //                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 //                .and()
-                .authenticationProvider(authenticationProvider);
-//                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-
-        return http.build();
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .build();
     }
 }
