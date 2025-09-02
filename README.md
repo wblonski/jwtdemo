@@ -5,6 +5,6 @@ Z grubsza jest tak:
 * Wdraża się poprwanie bez problemów na TomcatEE lokalnie, gdzie jest poprawnie zainicjowana baza postgres.
 * Nie wdraża sie na dockerze, bo trzeba dopiąć skrypt SQL inicjujący bazę: tabela User itd. 
 * SecurityConfiguration nie jest skonfigurowane, na ten moment.
-* 
+
 Inspirowałem się tym: https://www.youtube.com/watch?v=6r-MpAWVw6c 
 
