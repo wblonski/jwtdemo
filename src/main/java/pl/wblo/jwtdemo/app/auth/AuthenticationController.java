@@ -38,6 +38,7 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody AuthenticationRequest request
     ) {
+        MyLogger.trace("*** autenticate");
         return ResponseEntity.ok(service.authenticate(request));
     }
 

@@ -1,5 +1,6 @@
 package pl.wblo.jwtdemo.app.user;
 
+
 import jakarta.persistence.*;
 import lombok.Builder;
 import org.jspecify.annotations.Nullable;
