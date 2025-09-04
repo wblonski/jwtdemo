@@ -17,7 +17,6 @@ public class AuthenticationController {
 
     private final AuthenticationService service;
 
-
     public AuthenticationController(AuthenticationService service) {
         this.service = service;
     }
@@ -25,6 +24,8 @@ public class AuthenticationController {
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
             @RequestBody RegisterRequest request) {
+        // TODO wblo: zrób blokadę dubletów użytkownika - musi mieć unikalny email
+        // TODO wblo: Jwt sprawdza po emailu, więc email musi być unikalny - chyba nie da się tego obejść
         MyLogger.trace("register works!");
         var response = service.register(request);
 //        if (request.isMfaEnabled()) {

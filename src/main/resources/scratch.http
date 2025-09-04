@@ -1,40 +1,32 @@
+Działania na użytkownikach:
 
-###
-GET http://localhost:8080
-
-
-<> 2025-09-01T094424.404.json
-<> 2025-09-01T085207.404.html
-<> 2025-09-01T074635.404.json
-<> 2025-09-01T074611.200.txt
-<> 2025-09-01T074521.200.txt
-
-###
-GET http://localhost:8080/bye
-
-<> 2025-09-01T094419.200.txt
-
-
-###
-POST http://localhost:8080/post-test
-
-<> 2025-09-01T081236.403.json
-<> 2025-09-01T075540.403.json
-
-###
+###  Rejestracja nowego użytkownika
 POST http://localhost:8080/api/v1/auth/register
 Content-Type: application/json
 
 {
-  "firstname": "Jan",
-  "lastname": "Kowalski",
-  "email": "jan.kowalski@domain.com",
+  "firstname": "bob",
+  "lastname": "onkel",
+  "email": "bober.onkel@domain.com",
   "password": "password",
   "role": "ADMIN",
   "mfaEnabled": false
 }
 
-###
+###  Rejestracja nowego użytkownika
+POST http://localhost:8080/api/v1/auth/register
+Content-Type: application/json
+
+{
+  "firstname": "Janusz",
+  "lastname": "Kowalewski",
+  "email": "janusz.kowalewski@domain.com",
+  "password": "password",
+  "role": "ADMIN",
+  "mfaEnabled": false
+}
+
+### Sprawdzenie, czy działa autentykacja użytkownika
 POST http://localhost:8080/api/v1/auth/authenticate
 Content-Type: application/json
 
@@ -43,19 +35,20 @@ Content-Type: application/json
   "password": "password"
 }
 
-<> 2025-09-02T084743.403.json
+### Odświeżenie tokena użytkownika
+POST http://localhost:8080/api/v1/auth/refresh-token
+Content-Type: application/x-www-form-urlencoded
 
-###
-POST http://localhost:8080/api/v1/auth/register
+### Weryfikacja użytkownika tokenem
+POST http://localhost:8080/api/v1/auth/verify
 Content-Type: application/json
 
 {
-  "firstname": "bob",
-  "lastname": "onkel",
-  "email": "bob.onkel@domain.com",
-  "password": "password",
-  "role": "ADMIN",
-  "mfaEnabled": false
+  "email": "jan.kowalski@domain.com",
+  "code": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqYW4ua293YWxza2lAZG9tYWluLmNvbSIsImlhdCI6MTc1Njk2MzMyMywiZXhwIjoxNzU3NTY4MTIzfQ.MQCDfuq58QvLKdSmdjACixvg5QHjuGvbBAV1o12d6KY"
 }
 
-<> 2025-09-02T084944.403.json
+### Działania administratora
+
+###
+GET http://localhost:8080/api/v1/admin

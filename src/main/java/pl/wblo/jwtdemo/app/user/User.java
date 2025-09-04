@@ -3,13 +3,14 @@ package pl.wblo.jwtdemo.app.user;
 
 import jakarta.persistence.*;
 import lombok.Builder;
+import lombok.Data;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
-
+@Data
 @Builder
 @Entity
 @Table(name = "user",schema = "public")
@@ -77,63 +78,4 @@ public class User implements UserDetails {
         return true;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setMfaEnabled(boolean mfaEnabled) {
-        this.mfaEnabled = mfaEnabled;
-    }
-
-    public void setSecret(String secret) {
-        this.secret = secret;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public boolean isMfaEnabled() {
-        return mfaEnabled;
-    }
-
-    public String getSecret() {
-        return secret;
-    }
-
-    public Role getRole() {
-        return role;
-    }
 }
