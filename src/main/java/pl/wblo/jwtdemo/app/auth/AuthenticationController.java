@@ -25,20 +25,20 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationResponse> register(
             @RequestBody RegisterRequest request) {
         // TODO wblo: zrób blokadę dubletów użytkownika - musi mieć unikalny email
-        // TODO wblo: Jwt sprawdza po emailu, więc email musi być unikalny - chyba nie da się tego obejść
-        MyLogger.trace("register works!");
+        // TODO wblo: Jwt sprawdza po emailu, więc email musi być unikalny
+        MyLogger.trace("*** register");
         var response = service.register(request);
 //        if (request.isMfaEnabled()) {
 //            return ResponseEntity.ok(response);
 //        }
-        return ResponseEntity.accepted().build();
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody AuthenticationRequest request
     ) {
-        MyLogger.trace("*** autenticate");
+        MyLogger.trace("*** authenticate");
         return ResponseEntity.ok(service.authenticate(request));
     }
 
@@ -47,6 +47,7 @@ public class AuthenticationController {
             HttpServletRequest request,
             HttpServletResponse response
     ) throws IOException {
+        MyLogger.trace("*** refresh-token");
         service.refreshToken(request, response);
     }
 
@@ -54,6 +55,7 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationResponse> verifyCode(
             @RequestBody VerificationRequest verificationRequest
     ) {
+        MyLogger.trace("*** verify");
         return ResponseEntity.ok(service.verifyCode(verificationRequest));
     }
 

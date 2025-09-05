@@ -14,17 +14,11 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import pl.wblo.jwtdemo.app.util.MyLogger;
 
 import java.io.IOException;
-
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
-    static {
-        MyLogger.trace("JwtAuthenticationFilter initial block is running");
-    }
-    {
-        MyLogger.trace("JwtAuthenticationFilter initial block is running");
-    }
+
     public JwtAuthenticationFilter(JwtService jwtService, UserDetailsService userDetailsService){
         this.jwtService = jwtService;
         this.userDetailsService = userDetailsService;

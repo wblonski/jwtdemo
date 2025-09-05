@@ -13,7 +13,7 @@ import java.util.Collection;
 @Data
 @Builder
 @Entity
-@Table(name = "user",schema = "public")
+@Table(name = "user", schema = "public")
 public class User implements UserDetails {
 
     @Id
@@ -23,24 +23,23 @@ public class User implements UserDetails {
     private String lastname;
     private String email;
     private String password;
-    private boolean mfaEnabled;
-    private String secret;
-
     @Enumerated(EnumType.STRING)
     private Role role;
+    private boolean mfaEnabled;
+    private String secret;
 
     public User() {
     }
 
-    public User(Integer id, String firstname, String lastname, String email, String password, boolean mfaEnabled, String secret, Role role) {
+    public User(Integer id, String firstname, String lastname, String email, String password, Role role, boolean mfaEnabled, String secret) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.password = password;
+        this.role = role;
         this.mfaEnabled = mfaEnabled;
         this.secret = secret;
-        this.role = role;
     }
 
     @Override
