@@ -8,15 +8,15 @@ public enum Permission {
     MANAGER_READ("management:read"),
     MANAGER_UPDATE("management:update"),
     MANAGER_CREATE("management:create"),
-    MANAGER_DELETE("management:delete")
-    ;
-    private final String permission;
+    MANAGER_DELETE("management:delete"),
+    USER_READ("user:read");
+    private final String content;
 
-    Permission(String permission) {
-        this.permission = permission;
+    Permission(String content) {
+        this.content = content;
     }
 
-    String getPermission() {
-        return this.permission;
+    String getRoleMethodStr() {
+        return this.content;
     }
 }

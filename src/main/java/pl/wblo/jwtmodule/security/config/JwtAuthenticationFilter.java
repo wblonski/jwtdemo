@@ -31,31 +31,39 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain filterChain
     ) throws ServletException, IOException {
-        MyLogger.trace("doFilterInternal is running");
+
+        MyLogger.trace("********** JwtAuthenticationFilter.doFilterInternal is running...");
+        // jeśli to połączenie do rejestracji użytkownika to przepuść dalej
         if (request.getServletPath().contains("/api/v1/auth/register")) {
             filterChain.doFilter(request, response);
             return;
         }
+        // Jeśi autoryzacja bez "Bearer" to przepuść dalej
         final String authHeader = request.getHeader("Authorization");
-        final String jwt;
-        final String userEmail;
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
+        // autoryzacja JWT
+        // pobierz z tokena userEmail za pomoca jwtService
+        final String jwt;
+        final String userEmail;
         jwt = authHeader.substring(7);
         userEmail = jwtService.extractUsername(jwt);
+        // zweryfikuj z grubsza token, czy dotyczy tego użytkownika, więc czy zawiera jego userEmail
+        // i sprawdź, że brak kontekstu uwierzytelnionej sesji
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            // to pobierz pełne informacje o użytkoniku: haslo, czy nie zablokowany itd.
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+            // jeszcze raz (dokładnie) zweryfikuj token
             if (jwtService.isTokenValid(jwt, userDetails)) {
+                // utwórz nowy token z pełnymi danymi userDetails i uprawnieniami
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,
-                        userDetails.getAuthorities()
-                );
-                authToken.setDetails(
-                        new WebAuthenticationDetailsSource().buildDetails(request)
-                );
+                        userDetails.getAuthorities());
+                // dodaj do nowego tokena dane z requesta: IPaddress, sessionId
+                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         }

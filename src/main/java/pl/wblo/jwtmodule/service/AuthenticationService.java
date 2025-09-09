@@ -11,11 +11,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import pl.wblo.appmodule.repository.UserRepository;
-import pl.wblo.appmodule.repository.entity.User;
+import pl.wblo.jwtmodule.repository.UserRepository;
+import pl.wblo.jwtmodule.repository.entity.User;
 import pl.wblo.jwtmodule.restobjects.*;
-
-import java.io.IOException;
 
 @Data
 @Builder
@@ -85,8 +83,7 @@ public class AuthenticationService {
                 .build();
     }
 
-    public void refreshToken(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+    public void refreshToken(HttpServletRequest request, HttpServletResponse response) {
         final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         final String refreshToken;
         final String userEmail;
@@ -100,13 +97,12 @@ public class AuthenticationService {
                     .findByEmail(userEmail)
                     .orElseThrow();
             if (jwtService.isTokenValid(refreshToken, user)) {
-//                var accessToken = jwtService.generateToken(user);
-//                var authResponse = RefreshResponse.builder()
-//                        .accessToken(accessToken)
-//                        .refreshToken(refreshToken)
-//                        .mfaEnabled(false)
-//                        .build();
-//                new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
+                var accessToken = jwtService.generateToken(user);
+                var refreshResponseObj = RefreshResponseObj.builder()
+                        .accessToken(accessToken)
+                        .refreshToken(refreshToken)
+                        .mfaEnabled(false)
+                        .build();
             }
         }
     }

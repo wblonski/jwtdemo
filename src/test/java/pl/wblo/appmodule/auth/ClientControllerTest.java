@@ -24,7 +24,7 @@ class ClientControllerTest implements IntegrationTest {
     private HttpResponse<byte[]> response;
     private ErrorResponseObj errRespData;
     private AuthResponseObj authRespData;
-    private ObjectMapper objectMapper = new ObjectMapper()
+    private final ObjectMapper objectMapper = new ObjectMapper()
             .registerModule(new Jdk8Module())
             .registerModule(new JavaTimeModule())
             .configure(JsonParser.Feature.AUTO_CLOSE_SOURCE, true);
@@ -49,7 +49,7 @@ class ClientControllerTest implements IntegrationTest {
                         .formatted(errRespData.getTimestamp(), errRespData.getStatus(), errRespData.getError(), errRespData.getPath()));
             }
         } catch (Exception e) {
-            Assertions.fail("An exception was thrown  in \"register\": %s.".formatted(e.getMessage()));
+            Assertions.fail("An exception was thrown  in \"register\": %s.".formatted(e));
         }
     }
 
@@ -67,7 +67,7 @@ class ClientControllerTest implements IntegrationTest {
                         .formatted(errRespData.getTimestamp(), errRespData.getStatus(), errRespData.getError(), errRespData.getPath()));
             }
         } catch (Exception e) {
-            Assertions.fail("An exception was thrown in \"refresh-token\" : %s.".formatted(e.getMessage()));
+            Assertions.fail("An exception was thrown in \"refresh-token\" : %s.".formatted(e));
         }
     }
 
@@ -124,7 +124,7 @@ class ClientControllerTest implements IntegrationTest {
                 }
             }
         } catch (Exception e) {
-            Assertions.fail("An exception was thrown in \"verify\": %s.".formatted(e.getMessage()));
+            Assertions.fail("An exception was thrown in \"verify\": %s.".formatted(e));
         }
     }
 

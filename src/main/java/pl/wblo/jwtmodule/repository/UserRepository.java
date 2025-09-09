@@ -1,8 +1,8 @@
-package pl.wblo.appmodule.repository;
+package pl.wblo.jwtmodule.repository;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import pl.wblo.appmodule.repository.entity.User;
+import pl.wblo.jwtmodule.repository.entity.User;
 
 import java.util.Optional;
 

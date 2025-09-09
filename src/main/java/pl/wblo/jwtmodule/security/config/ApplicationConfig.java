@@ -13,7 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-import pl.wblo.appmodule.repository.UserRepository;
+import pl.wblo.jwtmodule.repository.UserRepository;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -29,7 +29,6 @@ public class ApplicationConfig {
 
     public ApplicationConfig(UserRepository repository) {
         this.repository = repository;
-        // set driver for firefox
     }
 
     @Bean

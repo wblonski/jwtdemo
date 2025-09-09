@@ -1,4 +1,4 @@
-package pl.wblo.appmodule.repository.entity;
+package pl.wblo.jwtmodule.repository.entity;
 
 
 import jakarta.persistence.*;
@@ -58,24 +58,5 @@ public class User implements UserDetails {
         return email;
     }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 
 }
