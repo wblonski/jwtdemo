@@ -114,7 +114,7 @@ class ClientControllerTest implements IntegrationTest {
                         .send(request, HttpResponse.BodyHandlers.ofByteArray());
                 if (response.statusCode() == 200) {
                     VerifyResponseObj verifyResponseObj = objectMapper.readValue(response.body(), VerifyResponseObj.class);
-                    MyLogger.trace("Verify data:\n access token=%s,\n mfaEnabled=%s"
+                    MyLogger.debug("Verify data:\n access token=%s,\n mfaEnabled=%s"
                             .formatted(verifyResponseObj.getAccessToken(), verifyResponseObj.getMfaEnabled()));
                 } else if (response.body().length != 0) {
                     // wystąpił błąd

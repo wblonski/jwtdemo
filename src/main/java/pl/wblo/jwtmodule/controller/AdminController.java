@@ -19,7 +19,7 @@ public class AdminController {
     @PreAuthorize("hasAuthority('admin:create')")
     @Hidden
     public String post() {
-        MyLogger.trace("AdminController :: post");
+        MyLogger.debug("AdminController :: post");
         return "POST:: admin controller";
     }
     @PutMapping

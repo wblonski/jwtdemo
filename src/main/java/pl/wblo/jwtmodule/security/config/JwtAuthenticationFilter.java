@@ -32,7 +32,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             FilterChain filterChain
     ) throws ServletException, IOException {
 
-        MyLogger.trace("********** JwtAuthenticationFilter.doFilterInternal is running...");
+        MyLogger.debug("JwtAuthenticationFilter.doFilterInternal is running...");
         // jeśli to połączenie do rejestracji użytkownika to przepuść dalej
         if (request.getServletPath().contains("/api/v1/auth/register")) {
             filterChain.doFilter(request, response);
