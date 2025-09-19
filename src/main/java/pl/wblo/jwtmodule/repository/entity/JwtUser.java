@@ -2,8 +2,10 @@ package pl.wblo.jwtmodule.repository.entity;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,9 +15,11 @@ import java.util.Collection;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "jwt_user", schema = "public")
 @Entity
-@Table(name = "user", schema = "public")
-public class User implements UserDetails {
+public class JwtUser implements UserDetails {
 
     @Id
     @GeneratedValue
@@ -29,19 +33,19 @@ public class User implements UserDetails {
     private boolean mfaEnabled;
     private String secret;
 
-    public User() {
-    }
+//    public JwtUser() {
+//    }
 
-    public User(Integer id, String firstname, String lastname, String email, String password, Role role, boolean mfaEnabled, String secret) {
-        this.id = id;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-        this.mfaEnabled = mfaEnabled;
-        this.secret = secret;
-    }
+//    public JwtUser(Integer id, String firstname, String lastname, String email, String password, Role role, boolean mfaEnabled, String secret) {
+//        this.id = id;
+//        this.firstname = firstname;
+//        this.lastname = lastname;
+//        this.email = email;
+//        this.password = password;
+//        this.role = role;
+//        this.mfaEnabled = mfaEnabled;
+//        this.secret = secret;
+//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -1,4 +1,4 @@
-package pl.wblo.appmodule.auth;
+package pl.wblo.jwtmodule.controller;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -6,6 +6,7 @@ import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import pl.wblo.jwtmodule.IntegrationTest;
 import pl.wblo.jwtmodule.restobjects.*;
 import pl.wblo.jwtmodule.security.config.Role;
 import pl.wblo.jwtmodule.util.MyLogger;
@@ -15,7 +16,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.UUID;
 
-class ClientControllerTest implements IntegrationTest {
+class AuthenticationControllerTest implements IntegrationTest {
     final String registerUrlStr = "http://localhost:8080/api/v1/auth/register";
     final String refreshTokenUrlStr = "http://localhost:8080/api/v1/auth/refresh-token";
     final String authTokenUrlStr = "http://localhost:8080/api/v1/auth/authenticate";
@@ -31,7 +32,7 @@ class ClientControllerTest implements IntegrationTest {
 
     @Test
     void returns200_whenUserRegisterWorks() {
-        // Expected empty response = 200, else ErrorResponseBody
+        // Expected empty response = 200, else ErrorResponseObj
 
         final String firstName = UUID.randomUUID().toString();
         final String lastName = UUID.randomUUID().toString();
@@ -55,7 +56,7 @@ class ClientControllerTest implements IntegrationTest {
 
     @Test
     void returns200_whenRefreshTokenWorks() {
-        // Expected empty response = 200, else ErrorResponseBody
+        // Expected empty response = 200, else ErrorResponseObj
         try {
             request = RequestFactory.getRefreshTokenRequest(refreshTokenUrlStr);
             response = HttpClient.newHttpClient()
@@ -83,7 +84,7 @@ class ClientControllerTest implements IntegrationTest {
 // register test
         try {
             request = RequestFactory.getUserRegisterRequest(registerUrlStr, registerRequestObj);
-            // Expected empty response = 200, response.body().length = 0, else ErrorResponseBody
+            // Expected empty response = 200, response.body().length = 0, else ErrorResponseObj
             response = HttpClient.newHttpClient()
                     .send(request, HttpResponse.BodyHandlers.ofByteArray());
             if (response.statusCode() != 200 && response.body().length != 0) {
@@ -93,7 +94,7 @@ class ClientControllerTest implements IntegrationTest {
             }
 // authenticate test
             request = RequestFactory.getAuthenticateRequest(authTokenUrlStr, authRequestObj);
-            // Expected response code = 200, response.body = AuthResponse
+            // Expected response code = 200, response.body = AuthResponseObj
             response = HttpClient.newHttpClient()
                     .send(request, HttpResponse.BodyHandlers.ofByteArray());
             if (response.statusCode() == 200) {

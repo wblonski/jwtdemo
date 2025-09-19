@@ -3,6 +3,7 @@ package pl.wblo.jwtmodule.service;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.HttpHeaders;
@@ -12,11 +13,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.wblo.jwtmodule.repository.UserRepository;
-import pl.wblo.jwtmodule.repository.entity.User;
+import pl.wblo.jwtmodule.repository.entity.JwtUser;
 import pl.wblo.jwtmodule.restobjects.*;
+import pl.wblo.jwtmodule.util.MyLogger;
 
 @Data
 @Builder
+@AllArgsConstructor
 @Service
 public class AuthenticationService {
     private final UserRepository repository;
@@ -25,16 +28,9 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final TwoFactorAuthenticationService tfaService;
 
-    public AuthenticationService(UserRepository repository, PasswordEncoder passwordEncoder, JwtService jwtService, AuthenticationManager authenticationManager, TwoFactorAuthenticationService tfaService) {
-        this.repository = repository;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtService = jwtService;
-        this.authenticationManager = authenticationManager;
-        this.tfaService = tfaService;
-    }
-
-    public void register(RegisterRequestObj request) {
-        var user = User.builder()
+    public AuthResponseObj register(RegisterRequestObj request) throws Exception {
+        MyLogger.debug("register() is starting");
+        var user = JwtUser.builder()
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
                 .email(request.getEmail())
@@ -43,20 +39,22 @@ public class AuthenticationService {
                 .mfaEnabled(request.isMfaEnabled())
                 .secret("")
                 .build();
-
+        MyLogger.debug("register() after user creating");
         // if MFA enabled --> Generate Secret
 //        if (request.isMfaEnabled()) {
 //            user.setSecret(tfaService.generateNewSecret());
 //        }
         repository.save(user);
+        MyLogger.debug("register() after save()");
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
-//        return AuthenticationResponse.builder()
-//                .secretImageUri(tfaService.generateQrCodeImageUri(user.getSecret()))
-//                .accessToken(jwtToken)
-//                .refreshToken(refreshToken)
-//                .mfaEnabled(user.isMfaEnabled())
-//                .build();
+        MyLogger.debug("register() before the end");
+        return AuthResponseObj.builder()
+                .secretImageUri(tfaService.generateQrCodeImageUri(user.getSecret()))
+                .accessToken(jwtToken)
+                .refreshToken(refreshToken)
+                .mfaEnabled(user.isMfaEnabled())
+                .build();
     }
 
     public AuthResponseObj authenticate(AuthRequestObj request) {

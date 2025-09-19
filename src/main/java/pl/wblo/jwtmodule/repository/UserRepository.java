@@ -2,12 +2,13 @@ package pl.wblo.jwtmodule.repository;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import pl.wblo.jwtmodule.repository.entity.User;
+import org.springframework.stereotype.Repository;
+import pl.wblo.jwtmodule.repository.entity.JwtUser;
 
 import java.util.Optional;
+@Repository
+public interface UserRepository extends JpaRepository<JwtUser, Integer> {
 
-public interface UserRepository extends JpaRepository<User, Integer> {
-
-     Optional<User> findByEmail(String email);
+     Optional<JwtUser> findByEmail(String email);
 
 }

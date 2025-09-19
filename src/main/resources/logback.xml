@@ -2,7 +2,7 @@
 <!DOCTYPE configuration>
 
 <configuration>
-    <variable file="src/main/resources/logback-vars-def.properties"/>
+    <property resource="logback-vars-def.properties"/>
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender" level="DEBUG">
         <encoder>

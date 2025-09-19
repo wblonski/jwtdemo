@@ -1,4 +1,4 @@
-package pl.wblo.appmodule.auth;
+package pl.wblo.jwtmodule;
 
 public interface IntegrationTest {
 }

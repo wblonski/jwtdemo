@@ -1,5 +1,6 @@
 package pl.wblo.jwtmodule.security.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,11 +23,12 @@ import static org.springframework.http.HttpHeaders.*;
 import static org.springframework.http.HttpMethod.*;
 import static org.springframework.web.bind.annotation.RequestMethod.PATCH;
 
+//@RequiredArgsConstructor
 @Configuration
 public class ApplicationConfig {
-
     private final UserRepository repository;
 
+    @Autowired
     public ApplicationConfig(UserRepository repository) {
         this.repository = repository;
     }
