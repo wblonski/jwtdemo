@@ -1,6 +1,6 @@
 # Spring Boot 3.5.5 Security with JWT Impementation
   Prosta implementacja JWT Authentication z użyciem SpringBoot 3.5.5, oraz JSON Web Token (JWT). 
-  Nie jest to implementacja kompletna, gotowa do wdrożenia na produkcję, a tylko szkielet. 
+  Nie jest to implementacja kompletna, gotowa do wdrożenia na produkcję, a tylko draft. 
   Inspirowałem się tym: https://www.youtube.com/watch?v=6r-MpAWVw6c 
 
 ## Funkcjonalności
@@ -67,6 +67,10 @@ Tylko kilka najprostszych:
 * Uruchom
   pod IDE lub: java -jar jwtdemo-1.0.0-SNAPSHOT.jar
 * Aplikacja dostępna na localhost:8080
+
+## Testy integracyjne
+* Zaimplementowano 3 proste developerskie testy integracyjne, aby weryfikować działanie powyższych funkcjonalności.
+* Należy je uruchamiać po wcześniejszym uruchomieniu aplikacji, np. spod IDE
 
 
   
